@@ -1,0 +1,18 @@
+{
+  "name": "ultimate-jekyll",
+  "version": "1.0.0",
+  "description": "A template that helps you jumpstart your Jekyll sites and is fueled by an intuitive incorporation of npm, gulp, and is fully SEO optimized and blazingly fast.",
+  "scripts": {
+    "start": "npx uj setup && npm start"
+  },
+  "author": {
+    "name": "ITW Creative Works",
+    "email": "hello@itwcreativeworks.com",
+    "url": "https://itwcreativeworks.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "ultimate-jekyll-manager": "latest"
+  },
+  "dependencies": {}
+}

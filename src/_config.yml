@@ -24,8 +24,8 @@ theme:
 
 # Meta
 meta:
-  title: ""
-  description: ""
+  title: "Ultimate Jekyll - An all-in-one Jekyll framework for modern websites."
+  description: "Ultimate Jekyll is a powerful, flexible, and easy-to-use Jekyll theme for building modern websites."
   image: "https://cdn.itwcreativeworks.com/assets/itw-creative-works/images/socials/itw-creative-works-brandmark-square-black-1024x1024.png"
   keywords: ""
   viewport: ""
@@ -34,9 +34,9 @@ meta:
 
 # Brand
 brand:
-  id: ""
-  name: ""
-  description: ""
+  id: "ultimate-jekyll"
+  name: "Ultimate Jekyll"
+  description: "Ultimate Jekyll is a powerful, flexible, and easy-to-use Jekyll theme for building modern websites."
   type: "Corporation"
   images:
     brandmark: "https://cdn.itwcreativeworks.com/assets/itw-creative-works/images/logo/itw-creative-works-brandmark-black-x.svg"

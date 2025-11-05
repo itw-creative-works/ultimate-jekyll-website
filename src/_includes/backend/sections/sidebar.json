@@ -1,0 +1,72 @@
+{
+  logo: {
+    href: '/',
+    class: 'filter-adaptive'
+  },
+  links: [
+    {
+      label: 'Dashboard',
+      href: '/dashboard',
+      icon: 'gauge-high'
+    },
+    {
+      header: true,
+      label: 'Main Menu'
+    },
+    // {
+    //   label: 'Analytics',
+    //   href: '/dashboard/analytics',
+    //   icon: 'chart-line'
+    // },
+    {
+      label: 'Items',
+      href: null,
+      icon: 'folder',
+      dropdown: [
+        {
+          label: 'All Items',
+          href: '/dashboard/items',
+          icon: 'list'
+        },
+        {
+          label: 'Create New',
+          href: '/dashboard/items/new',
+          icon: 'plus'
+        }
+      ]
+    },
+    // {
+    //   label: 'Users',
+    //   href: '/dashboard/users',
+    //   icon: 'users'
+    // },
+    {
+      header: true,
+      label: 'Explore'
+    },
+    {
+      label: 'Account',
+      href: '/account#profile',
+      icon: 'user-gear'
+    },
+    {
+      label: 'Homepage',
+      href: '/',
+      icon: 'house'
+    },
+    // {
+    //   label: 'Billing',
+    //   href: '/dashboard/billing',
+    //   icon: 'credit-card',
+    //   badge: {
+    //     text: 'Pro',
+    //     color: 'primary'
+    //   }
+    // },
+  ],
+  bottom: {
+    ad: {
+      enabled: true,
+    }
+  }
+}

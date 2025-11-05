@@ -1,0 +1,116 @@
+name: Compile and Build Site
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+      - template
+  schedule:
+    - cron: '30 1 1 * *' # auto-build schedule (configurable in ultimate-jekyll-manager.json)
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+# permissions:
+#   contents: write
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  BACKEND_MANAGER_KEY: ${{ secrets.BACKEND_MANAGER_KEY }}
+  RUBY_VERSION: '3.0.0'
+  BUNDLER_VERSION: '2.4.21'
+  NODE_VERSION: '22'
+  UJ_BUILD_MODE: 'true'
+  UJ_IS_SERVER: 'true'
+
+jobs:
+  build:
+    # needs: nothing
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - name: Setup git config
+        run: |
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config --global user.name "$GITHUB_ACTOR"
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: false
+      - name: Install specific bundler version
+        run: gem install bundler -v ${{ env.BUNDLER_VERSION }}
+      # - name: Run bundle install # TODO: [DEPRECATED] MIGRATE TO: bundle config set --local path 'vendor/bundle'
+      #   run: |
+      #     bundle install --path vendor/bundle
+      - name: Run bundle install
+        run: |
+          bundle install
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Run node install
+        run: npm install
+      - name: Log dependency versions
+        run: |
+          echo "🖥️ Unix Versions: "
+          uname -a
+          echo -e "\n"
+
+          echo "🐧 Ubuntu Versions: "
+          lsb_release -a
+          echo -e "\n"
+
+          echo "🔧 Framework Versions: "
+          echo "Ruby: $(ruby -v)"
+          echo "Bundler: $(bundle -v)"
+          echo "Gem: $(gem -v)"
+          echo "Jekyll: $(jekyll -v)"
+          echo "Node: $(node -v)"
+          echo "NPM: $(npm -v)"
+          echo "Ultimate Jekyll: $(npx uj version)"
+          echo -e "\n"
+
+          echo "💎 Gem Versions: "
+          gem list
+          echo -e "\n"
+
+          echo "📦 NPM Dependency Versions: "
+          npm list --depth=0 || echo ""
+          echo -e "\n"
+      - name: Log all files in repo
+        run: |
+          echo "All files in the repo: "
+          ls -R *
+      - name: Run node build
+        run: |
+          UJ_BUILD_MODE=true UJ_IS_SERVER=true npx uj setup && npm run build
+      - name: Delete gh-pages branch
+        continue-on-error: true
+        run: |
+          curl -L \
+            -X DELETE \
+            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+            https://api.github.com/repos/$GITHUB_REPOSITORY/git/refs/heads/gh-pages
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./_site
+          # enable_jekyll: true
+      - name: Purge CloudFlare cache
+        run: npx uj cloudflare-purge
+      - name: Purge artifacts
+        uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          expire-in: 30 minutes # Set this to 0 to delete instantly

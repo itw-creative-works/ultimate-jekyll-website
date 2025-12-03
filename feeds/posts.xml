@@ -1,0 +1,40 @@
+<rss
+  version="2.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  >
+  <channel>
+    <atom:link
+      href="https://ultimate-jekyll.itwcreativeworks.com/feeds/posts.xml"
+      rel="self"
+      type="application/rss+xml"
+    />
+    <title>
+      <![CDATA[
+        Ultimate Jekyll Blog
+      ]]>
+    </title>
+    <description>
+      <![CDATA[
+        Ultimate Jekyll is a powerful, flexible, and easy-to-use Jekyll theme for building modern websites.
+      ]]>
+    </description>
+    <link>
+      https://ultimate-jekyll.itwcreativeworks.com/blog
+    </link>
+    <generator>
+      Jekyll 4.4.1
+    </generator>
+    <lastBuildDate>
+      Wed, 03 Dec 2025 06:10:04 GMT
+    </lastBuildDate>
+    <language>
+      <![CDATA[ en ]]>
+    </language>
+
+    
+
+    
+  </channel>
+</rss>
